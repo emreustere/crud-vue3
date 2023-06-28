@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <div v-for="post in posts" :key="post._id" class="card my-5">
+    <div
+      v-for="post in posts"
+      :key="post._id"
+      class="card my-5 has-background-grey-lighter"
+    >
       <div class="card-content">
         <div class="media">
           <div class="media-content">
@@ -16,7 +20,12 @@
       </div>
       <div class="card">
         <footer class="card-footer">
-          <button class="card-footer-item button is-warning">Edit</button>
+          <button
+            @click="editPost(post._id)"
+            class="card-footer-item button is-warning"
+          >
+            Edit
+          </button>
           <button
             @click="removePost(post._id)"
             class="card-footer-item button is-danger"
@@ -31,8 +40,10 @@
 
 <script>
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 export default {
   setup() {
+    const router = new useRouter();
     const posts = ref([]);
     const API_URL = "http://localhost:5000/posts";
     onMounted(() => {
@@ -49,9 +60,19 @@ export default {
       });
       getPosts();
     }
+
+    async function editPost(_id) {
+      router.push({
+        name: "Update",
+        params: {
+          id: _id
+        }
+      });
+    }
     return {
       posts,
-      removePost
+      removePost,
+      editPost
     };
   }
 };
