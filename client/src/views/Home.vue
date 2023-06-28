@@ -1,12 +1,12 @@
 <template>
-  <PostList />
+  <MovieList />
 </template>
 
 <script>
-import PostList from "../components/PostList.vue";
+import MovieList from "../components/MovieList.vue";
 export default {
   components: {
-    PostList
+    MovieList
   }
 };
 </script>

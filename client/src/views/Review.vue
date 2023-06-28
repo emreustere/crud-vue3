@@ -1,35 +1,38 @@
 <template>
-  <PostForm :post="post" :submitForm="updatePost"></PostForm>
+  <ReviewForm :movie="movie" :submitForm="addReview"></ReviewForm>
 </template>
 
 <script>
-import PostForm from "../components/PostForm.vue";
+import ReviewForm from "../components/ReviewForm.vue";
 import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 export default {
   components: {
-    PostForm
+    ReviewForm
   },
   setup() {
     const router = new useRouter();
     const route = new useRoute();
     const API_URL = "http://localhost:5000/posts";
-    const post = ref({
+    const movie = ref({
       title: "",
-      content: "",
-      creator: ""
+      description: "",
+      releaseDate: "",
+      rating: "",
+      reviews: [""]
     });
+    const prevReviews = movie.reviews;
 
     onMounted(() => {
-      getPost();
+      getDetails();
     });
-    async function getPost() {
+    async function getDetails() {
       const { id } = route.params;
       const response = await fetch(`${API_URL}/${id}`);
       const json = await response.json();
-      post.value = json;
+      movie.value = json;
     }
-    async function updatePost() {
+    async function addReview() {
       const { id } = route.params;
       const response = await fetch(`${API_URL}/${id}`, {
         method: "PUT",
@@ -37,19 +40,14 @@ export default {
           "content-type": "application/json"
         },
         body: JSON.stringify({
-          title: post.value.title,
-          content: post.value.content,
-          creator: post.value.creator
+          reviews: movie.value.review + prevReviews
         })
       });
-      const json = await response.json();
-      router.push({
-        name: "Home"
-      });
+      router.go(-1);
     }
     return {
-      post,
-      updatePost
+      movie,
+      addReview
     };
   }
 };

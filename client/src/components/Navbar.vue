@@ -1,37 +1,23 @@
 <template>
   <nav class="navbar is-warning" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="http://localhost:8080/">
-        <img
-          src="https://icon-library.com/images/movie-app-icon/movie-app-icon-0.jpg"
-          width="40"
-          height="40"
-        />
-      </a>
-
-      <a
-        role="button"
-        class="navbar-burger"
-        aria-label="menu"
-        aria-expanded="false"
-        data-target="navbarBasicExample"
-      >
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
+      <img
+        src="https://icon-library.com/images/movie-app-icon/movie-app-icon-0.jpg"
+        width="54"
+        height="40"
+      />
     </div>
 
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-start">
-        <strong class="navbar-item"> Vue.js CRUD API </strong>
+        <strong class="navbar-item"> Movie Review App </strong>
       </div>
 
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <router-link to="/create" class="button is-dark">
-              <strong>Create</strong>
+            <router-link to="/" class="button is-dark">
+              <strong>Home</strong>
             </router-link>
           </div>
         </div>

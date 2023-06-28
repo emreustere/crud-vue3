@@ -1,36 +1,30 @@
 <template>
   <div class="container">
     <div
-      v-for="post in posts"
-      :key="post._id"
+      v-for="movie in movies"
+      :key="movie._id"
       class="card my-5 has-background-grey-lighter"
     >
       <div class="card-content">
         <div class="media">
           <div class="media-content">
-            <p class="title is-4">{{ post.title }}</p>
+            <p class="title is-4">{{ movie.title }}</p>
           </div>
-        </div>
-
-        <div class="content">
-          {{ post.content }}
-          <p />
-          <strong>Creator: {{ post.creator }}</strong>
+          <img
+            class="level-item"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuVFpiCc7OCV4Us1Wu1rNKQkvd7i-Bj9gDDEPRRpQtNGYy4Fnj"
+            width="200"
+          />
         </div>
       </div>
+
       <div class="card">
         <footer class="card-footer">
           <button
-            @click="editPost(post._id)"
+            @click="viewDetails(movie._id)"
             class="card-footer-item button is-warning"
           >
-            Edit
-          </button>
-          <button
-            @click="removePost(post._id)"
-            class="card-footer-item button is-danger"
-          >
-            Delete
+            Details & Reviews
           </button>
         </footer>
       </div>
@@ -44,35 +38,27 @@ import { useRouter } from "vue-router";
 export default {
   setup() {
     const router = new useRouter();
-    const posts = ref([]);
+    const movies = ref([]);
     const API_URL = "http://localhost:5000/posts";
     onMounted(() => {
-      getPosts();
+      getMovies();
     });
-    async function getPosts() {
+    async function getMovies() {
       const response = await fetch(API_URL);
       const json = await response.json();
-      posts.value = json;
+      movies.value = json;
     }
-    async function removePost(_id) {
-      const response = await fetch(`${API_URL}/${_id}`, {
-        method: "DELETE"
-      });
-      getPosts();
-    }
-
-    async function editPost(_id) {
+    async function viewDetails(_id) {
       router.push({
-        name: "Update",
+        name: "Details",
         params: {
           id: _id
         }
       });
     }
     return {
-      posts,
-      removePost,
-      editPost
+      movies,
+      viewDetails
     };
   }
 };

@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import Post from "../db/posts.js";
+import Movie from "../db/movies.js";
 
 const router = express.Router();
 
@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const allPosts = await Post.find();
-    res.json(allPosts);
+    const allMovies = await Movie.find();
+    res.json(allMovies);
   } catch (error) {
     console.log(error);
   }
@@ -17,40 +17,47 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const post = await Post.findById(id);
-    if (!post) return;
-    res.status(200).json(post);
+    const movie = await Movie.findById(id);
+    if (!movie) return;
+    res.status(200).json(movie);
   } catch (error) {
     console.log(error);
   }
 });
 router.post("/", async (req, res) => {
   try {
-    const post = req.body;
-    const createdPost = await Post.create(post);
-    res.status(201).json(createdPost);
+    const movie = req.body;
+    const createdMovie = await Movie.create(movie);
+    res.status(201).json(createdMovie);
   } catch (error) {
     console.log(error);
   }
 });
 router.put("/:id", async (req, res) => {
-  // try {
-  const { id } = req.params;
-  const { title, content, creator } = req.body;
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send("Post not found.");
-  const updatedPost = { title, content, creator, _id: id };
-  await Post.findByIdAndUpdate(id, updatedPost, { new: true });
-  res.json(updatedPost);
-  // } catch (error) {
-  //   console.log(error);
-  // }
+  try {
+    const { id } = req.params;
+    const { title, description, releaseDate, rating, reviews } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).send("Movie not found.");
+    const updatedMovie = {
+      title,
+      description,
+      releaseDate,
+      rating,
+      reviews,
+      _id: id,
+    };
+    await Movie.findByIdAndUpdate(id, updatedMovie, { new: true });
+    res.json(updatedMovie);
+  } catch (error) {
+    console.log(error);
+  }
 });
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    await Post.findByIdAndRemove(id);
-    res.json({ message: "Post deleted." });
+    await Movie.findByIdAndRemove(id);
+    res.json({ message: "Movie deleted." });
   } catch (error) {
     console.log(error);
   }
