@@ -7,9 +7,7 @@ import ReviewForm from "../components/ReviewForm.vue";
 import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 export default {
-  components: {
-    ReviewForm
-  },
+  components: { ReviewForm },
   setup() {
     const router = new useRouter();
     const route = new useRoute();
@@ -21,7 +19,6 @@ export default {
       rating: "",
       reviews: [""]
     });
-    const prevReviews = movie.reviews;
 
     onMounted(() => {
       getDetails();
@@ -34,15 +31,22 @@ export default {
     }
     async function addReview() {
       const { id } = route.params;
+      const movie_details = await fetch(`${API_URL}/${id}`).then((response) =>
+        response.json()
+      );
+      console.log(movie_details);
+      const reviews = movie_details.reviews;
+      reviews.push(movie.value.review);
       const response = await fetch(`${API_URL}/${id}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json"
         },
         body: JSON.stringify({
-          reviews: movie.value.review + prevReviews
+          reviews: reviews
         })
       });
+      const json = await response.json();
       router.go(-1);
     }
     return {
