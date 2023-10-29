@@ -4,7 +4,7 @@
       <figure class="media-left">
         <p class="image is-128x128">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuVFpiCc7OCV4Us1Wu1rNKQkvd7i-Bj9gDDEPRRpQtNGYy4Fnj"
+            :src="movie.img"
           />
         </p>
       </figure>

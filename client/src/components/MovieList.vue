@@ -8,12 +8,12 @@
       <div class="card-content">
         <div class="media">
           <div class="media-content">
-            <p class="title is-4">{{ movie.title }}</p>
+            <p class="title is-4 mt-6">{{ movie.title }}</p>
           </div>
           <img
             class="level-item"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuVFpiCc7OCV4Us1Wu1rNKQkvd7i-Bj9gDDEPRRpQtNGYy4Fnj"
-            width="200"
+            :src="movie.img"
+            width="100"
           />
         </div>
       </div>

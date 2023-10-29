@@ -62,5 +62,11 @@ router.delete("/:id", async (req, res) => {
     console.log(error);
   }
 });
-
+router.post("/:id/reviews", async (req, res) => {
+  try {
+    // Review request endpoint here.
+  } catch (error) {
+    console.log(error);
+  }
+});
 export default router;

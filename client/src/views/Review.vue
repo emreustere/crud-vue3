@@ -17,6 +17,7 @@ export default {
       description: "",
       releaseDate: "",
       rating: "",
+      img: "",
       reviews: [""]
     });
 
